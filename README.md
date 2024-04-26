@@ -88,7 +88,7 @@ Guarde y cierre el archivo.
 ```
 sudo sysctl --system
 ```
-## Paso 6: Instalar un Runtime de alto nivel --> Conatinerd 
+## Paso 6: Instalar un Runtime de alto nivel --> Containerd 
 ##### Kubernetes requiere un runtime para la ejecución de contenedores, y una de las opciones más populares es containerd. Pero no está disponible en los repositorios de paquetes por defecto de Rocky Linux, así que lo agregaremos, usa el siguiente repositorio docker en todos los nodos.
 ```
 sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
