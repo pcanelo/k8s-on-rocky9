@@ -160,7 +160,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 Ahora uniremos los nodos workers al clúster y ejecute el siguiente comando Kubeadm en cada nodo worker.
 ```
-kubeadm unirse a k8s-cp01-lab:6443 --token xxxxxxxxxxxxxxxxx \
+kubeadm join a k8s-cp01-lab:6443 --token xxxxxxxxxxxxxxxxx \
   --discovery-token-ca-cert-hash sha256:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 ```
 
