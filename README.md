@@ -1,4 +1,4 @@
-# Laboratorio k8s corriendo en rocky 9.3 
+# Laboratorio kubernetes en rocky linux 9.3 
 ## Configuración del laboratorio 
 
 ## Paso 1 crea las vms en local, nube de tu eleccion a tu ambiente de virtualizacion 
