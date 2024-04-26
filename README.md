@@ -34,7 +34,7 @@ debes poner las siguientes entradas en los archivos hosts que estan en /etc/host
 |``` 192.168.1.71  k8s-wk01-lab ```|
 |``` 192.168.1.72  k8s-wk02-lab ```|
 
-## Paso 3: deshabilite el swap space en cada nodo para que kubelete funcione sin problemas
+## Paso 3: deshabilite el swap space en cada nodo para que kubelet funcione sin problemas
 ```
 sudo swapoff -a 
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
