@@ -137,7 +137,7 @@ sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 ```
 Después de instalar las herramientas de Kubernetes, inicia el servicio kubelet en cada nodo.
 ```
-sudo systemctl enable --ahora kubelet
+sudo systemctl enable --now kubelet
 ```
 
 ## Paso 8: Instalemos el un Cluster de Kubernetes en Rocky Linux 9
