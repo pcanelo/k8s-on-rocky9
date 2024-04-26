@@ -119,7 +119,7 @@ OJO: Las herramientas Kubernetes como Kubeadm, kubectl y kubelet no están dispo
 en los repositorios de paquetes por defecto de Rocky Linux 9. 
 Por lo tanto, para instalar estas herramientas, agrega el siguiente repositorio en todos los nodos
 ```
-$ cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
