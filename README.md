@@ -36,6 +36,7 @@ debes poner las siguientes entradas en los archivos hosts que estan en /etc/host
 
 ## Paso 3: deshabilite el swap space en cada nodo para que kubelet funcione sin problemas
 ```
+sudo dnf update -y
 sudo swapoff -a 
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 ```
