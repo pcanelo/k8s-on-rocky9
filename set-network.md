@@ -3,7 +3,7 @@
 Para cambiar la dirección IP de una máquina con AlmaLinux que no tiene interfaz gráfica, necesitarás acceder a la terminal o línea de comandos. A continuación, te muestro cómo puedes hacerlo utilizando la herramienta `nmcli`, que es el gestor de red en línea de comandos para NetworkManager, comúnmente disponible en distribuciones como AlmaLinux.
 
 ### 1. Identificar la interfaz de red: Primero, necesitas saber qué interfaces de red están disponibles en tu sistema. Puedes hacerlo con el siguiente comando:
-    ```bash
+    ```
     nmcli device status 
     ```
     Este comando te mostrará las interfaces disponibles y su estado actual.
