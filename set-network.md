@@ -12,10 +12,10 @@ Para cambiar la dirección IP de una máquina con AlmaLinux que no tiene interfa
 Para configurar la dirección IP:
 
 ```
-    nmcli con mod ens192 ipv4.addresses 192.168.1.100/24 
+nmcli con mod ens192 ipv4.addresses 192.168.1.100/24
 ```
 
-    Para configurar la puerta de enlace (gateway):
+Para configurar la puerta de enlace (gateway):
     
 ```
     nmcli con mod ens192 ipv4.gateway 192.168.1.1 
@@ -27,7 +27,7 @@ Para configurar la dirección IP:
     nmcli con mod ens192 ipv4.dns "8.8.8.8,8.8.4.4" 
 ```
 
-    Asegúrate de reemplazar ens192 con el nombre de tu interfaz de red, y los valores de IP, gateway y DNS con los que correspondan a tu red.
+Asegúrate de reemplazar ens192 con el nombre de tu interfaz de red, y los valores de IP, gateway y DNS con los que correspondan a tu red.
 
 ### 3. Activar la configuración de IPv4 y desactivar DHCP (si es necesario): Si deseas usar una configuración estática y no DHCP, necesitas desactivar DHCP y activar el método manual:
 ```
