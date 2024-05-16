@@ -9,18 +9,24 @@ Para cambiar la dirección IP de una máquina con AlmaLinux que no tiene interfa
     Este comando te mostrará las interfaces disponibles y su estado actual.
 
 ### 2. Modificar la dirección IP: Una vez que identifiques la interfaz de red correcta (por ejemplo, ens192), puedes modificar su configuración de IP. Aquí tienes cómo establecer una nueva dirección IP estática:
-    Para configurar la dirección IP:
+Para configurar la dirección IP:
+
 ```
     nmcli con mod ens192 ipv4.addresses 192.168.1.100/24 
 ```
+
     Para configurar la puerta de enlace (gateway):
+    
 ```
     nmcli con mod ens192 ipv4.gateway 192.168.1.1 
 ```
+
     Para configurar los servidores DNS:
+
 ```
     nmcli con mod ens192 ipv4.dns "8.8.8.8,8.8.4.4" 
 ```
+
     Asegúrate de reemplazar ens192 con el nombre de tu interfaz de red, y los valores de IP, gateway y DNS con los que correspondan a tu red.
 
 ### 3. Activar la configuración de IPv4 y desactivar DHCP (si es necesario): Si deseas usar una configuración estática y no DHCP, necesitas desactivar DHCP y activar el método manual:
@@ -29,9 +35,9 @@ Para cambiar la dirección IP de una máquina con AlmaLinux que no tiene interfa
 ```
 
 ### 4. Reiniciar la conexión de red: Para aplicar los cambios, reinicia la conexión de red:
-    ```bash
+```
     nmcli con up ens192
-    ```
+```
     Este comando desactivará y reactivará la interfaz de red, aplicando los cambios de configuración.
 
 Estos pasos deben permitirte cambiar la dirección IP y otros aspectos relacionados de la configuración de red en un sistema AlmaLinux o Rocky Linux sin interfaz gráfica. Recuerda ajustar los comandos según las características específicas de tu red y sistema.
