@@ -21,7 +21,7 @@ Para configurar la puerta de enlace (gateway):
     nmcli con mod ens192 ipv4.gateway 192.168.1.1 
 ```
 
-    Para configurar los servidores DNS:
+Para configurar los servidores DNS:
 
 ```
     nmcli con mod ens192 ipv4.dns "8.8.8.8,8.8.4.4" 
