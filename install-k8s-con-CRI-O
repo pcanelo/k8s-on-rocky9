@@ -1,14 +1,14 @@
 # Laboratorio Kubernetes en Rocky Linux 9.3 
 ## Configuración del laboratorio 
 
-## Paso 1 crea las vms en local, nube de tu eleccion a tu ambiente de virtualizacion 
+## Paso 1 crea las vms en local, nube de tu eleccion o tu ambiente de virtualización 
 Vamos a usar 3 makinas virtuales creadas en virtual box que seran nuestros nodos
 
 | Nombre        | IP           | Rol                |
 |---------------|--------------|--------------------|
-| vm-k8s-cp01-lab  | 192.168.1.70 | Nodo Control Plane |
-| vm-k8s-wk01-lab  | 192.168.1.71 | Nodo Worker01 |
-| vm-k8s-wk02-lab  | 192.168.1.72 | Nodo Worker02 |
+| cp01.knelo.com  | 192.168.1.70 | Nodo Control Plane |
+| wk01.knelo.com  | 192.168.1.71 | Nodo Worker01 |
+| wk02.knelo.com  | 192.168.1.72 | Nodo Worker02 |
 
 
 Definir usuario sudo en cada nodo nombrelo como: admin  sysops o como se te pare en ganas
@@ -17,22 +17,22 @@ Definir usuario sudo en cada nodo nombrelo como: admin  sysops o como se te pare
 Para esto debes entar a cada nodo, inicia sesión o utilice ssh en cada máquina y ejecute los comandos hostnamectl para configurar su respectivo nombre de host.
 En nodo de plano de control ejecuta 
 ```
-sudo hostnamectl set-hostname “k8s-cp01-lab” && exec bash
+sudo hostnamectl set-hostname “cp01.knelo.com” && exec bash
 ```
 En nodo worker 1 
 ```
-sudo hostnamectl set-hostname “k8s-wk01-lab” && exec bash
+sudo hostnamectl set-hostname “wk01.knelo.com” && exec bash
 ```
 En nodo worker 2 
 ```
-sudo hostnamectl set-hostname “k8s-wk02-lab” && exec bash
+sudo hostnamectl set-hostname “wk02.knelo.com” && exec bash
 ```
 debes poner las siguientes entradas en los archivos hosts que estan en /etc/hosts de cada nodo
 | IP     / nombre host      |     
 |--------------| 
-|``` 192.168.1.70  k8s-cp01-lab ```|
-|``` 192.168.1.71  k8s-wk01-lab ```|
-|``` 192.168.1.72  k8s-wk02-lab ```|
+|``` 192.168.1.70  cp01.knelo.com ```|
+|``` 192.168.1.71  wk01.knelo.com ```|
+|``` 192.168.1.72  wk02.knelo.com ```|
 
 ## Paso 3: deshabilite el swap space en cada nodo para que kubelet funcione sin problemas
 ```
@@ -89,8 +89,8 @@ Guarde y cierre el archivo.
 ```
 sudo sysctl --system
 ```
-## Paso 6: Instalar un Kubernetes y el Runtime de alto nivel --> CRI-O (este si que si)
-##### Kubernetes requiere un runtime para la ejecución de contenedores, y una de las opciones más compatibles con k8s es CRI-O. 
+## Paso 6: Instalar Kubernetes y el Runtime de alto nivel --> CRI-O (este sí que sí)
+#### Kubernetes requiere un runtime para la ejecución de contenedores, y una de las opciones más compatibles con k8s es CRI-O. 
 Pero no está disponible en los repositorios de paquetes por defecto de Rocky Linux, así que lo agregaremos, usa el siguiente repositorio docker en todos los nodos.
 Añadir el repositorio de Kubernetes:
 ```
@@ -117,7 +117,7 @@ EOF
 ```
 #### Instalar dependencias de paquetes oficiales
 ```
-dnf install -y \
+sudo dnf install -y \
     conntrack \
     container-selinux \
     ebtables \
@@ -127,14 +127,14 @@ dnf install -y \
 ```
 #### Instala los paquetes de los repos que agregamos 
 ```
-dnf install -y --repo cri-o --repo kubernetes \
+sudo dnf install -y --repo cri-o --repo kubernetes \
     cri-o \
     kubeadm \
     kubectl \
     kubelet
 ```
 
-##### Ahora, habilitamos CRI-O (que es un entorno más alineado con Kubernetes).
+#### Ahora, habilitamos CRI-O (que es un entorno más alineado con Kubernetes).
 ejecuta uno a uno (o como quieras)
 ```
 sudo dnf module enable cri-o:1.28 -y  
@@ -153,12 +153,12 @@ sudo systemctl enable --now kubelet
 ## Paso 8: Instalemos el un Cluster de Kubernetes en Rocky Linux 9
 Ahora ya estamos ready para instalar el clúster de Kubernetes. Ejecute el comando Kubeadm para inicializar el clúster de Kubernetes desde el nodo maestro.
 ```
-sudo kubeadm init --control-plane-endpoint=NOMBRE-HOST_CONTROL-PLANE
+sudo kubeadm init --control-plane-endpoint=cp01.knelo.com
 ```
 #### OJO: Al terminar el comando anterior te entregara el comando que debes ejecutar en cada node worker como root
-el comando comienza con pero aun no lo ejecutes 
+el comando comienza como sigue pero aun no lo ejecutes 
  
-###### kubeadm join k8s-cp01-lab:6443   --token    ...............    --discovery-token-ca-cert-hash   .............
+###### kubeadm join cp01.knelo.com:6443   --token    ...............    --discovery-token-ca-cert-hash   .............
  
 
 Para comenzar a interactuar con el clúster de Kubernetes, ejecute los siguientes comandos en el nodo cp.
@@ -170,7 +170,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 Ahora uniremos los nodos workers al clúster y ejecute el siguiente comando Kubeadm en cada nodo worker.
 ```
-kubeadm join a k8s-cp01-lab:6443 --token xxxxxxxxxxxxxxxxx \
+kubeadm join a cp01.knelo.com:6443 --token xxxxxxxxxxxxxxxxx \
   --discovery-token-ca-cert-hash sha256:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 ```
 
@@ -179,7 +179,7 @@ ejecuta
 ```
 kubectl get nodes
 ```
-La salida anterior muestra que los nodos son "NoteRead", por lo que para hacer que el estado de los nodos sea "Ready", instale el addon o plugin de red Calico en el siguiente paso.
+La salida anterior muestra que los nodos son "NotRead", por lo que para hacer que el estado de los nodos sea "Ready", instale el addon o plugin de red Calico en el siguiente paso.
 
 ## Paso 9: Instalar Calico Network Addon
 El complemento de red Calico es necesario en el clúster Kubernetes para permitir la comunicación entre pods, 
@@ -214,7 +214,7 @@ kubectl get svc web-app01
 ```
 Intente acceder a la aplicación utilizando nodeport "399911" o el que a ti te aparezca, ejecute el siguiente comando curl,
 ```
-curl k8s-wk01-lab:31121
+curl wk01.knelo.com:31121
 ```
 si todo sale bien entonces espectacular, todo lo anterior confirma que podemos acceder a la página web de nuestra aplicación. 
 Esto también confirma que nuestro clúster Kubernetes se ha instalado correctamente.
